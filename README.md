@@ -91,4 +91,15 @@ scrape_configs: <br>
         replacement: '${1}' <br>
 
   Refs: https://github.com/confluentinc/jmx-monitoring-stacks/tree/main/jmxexporter-prometheus-grafana/cp-ansible
+
+  TESTING JMX Monitoring LOCALLY:
+  JMX_PORT=9995 zookeeper-server-start ${CONFLUENT_HOME}/etc/kafka/zookeeper.properties &
+  JMX_PORT=9996 kafka-server-start ${CONFLUENT_HOME}/etc/kafka/server.properties &
+
+  wget https://github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar
+  java -jar jmxterm-1.0.1-uber.jar
+  open localhost:9995/open localhost:9996
+
+  >beans
+  >get -b kafka.server:name=ClusterId,type=KafkaServer *
   
