@@ -94,12 +94,19 @@ scrape_configs: <br>
 
   TESTING JMX Monitoring LOCALLY:
   *JMX_PORT=9995 zookeeper-server-start ${CONFLUENT_HOME}/etc/kafka/zookeeper.properties &*
-  *JMX_PORT=9996 kafka-server-start ${CONFLUENT_HOME}/etc/kafka/server.properties &*
+  *JMX_PORT=9996 kafka-server-start ${CONFLUENT_HOME}/etc/kafka/server.properties &* <br>
 
-  wget https://github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar
-  java -jar jmxterm-1.0.1-uber.jar
-  open localhost:9995/open localhost:9996
+  If using Services, after <br>
 
-  >beans
+  *systemctl daemon-reload* <br>
+  *systemctl stop confluent-server* <br>
+  *systemctl restart confluent-server* <br>
+  *journalctl -u confluent-server*
+
+  wget https://github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar <br>
+  java -jar jmxterm-1.0.1-uber.jar <br>
+  open localhost:9995/open localhost:9996 <br>
+
+  >beans 
   >get -b kafka.server:name=ClusterId,type=KafkaServer *
   
