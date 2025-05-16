@@ -1,0 +1,26 @@
+# Nginx Contain Debian Distribution; Not much memory footprint 
+FROM nginx
+RUN apt-get update && apt-get install -y --no-install-recommends openjdk-17-jdk ca-certificates wget unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/confluent && \
+    cd /opt/confluent && \
+    wget https://packages.confluent.io/archive/7.9/confluent-7.9.0.zip && \
+    unzip confluent-7.9.0.zip && \
+    rm confluent-7.9.0.zip
+
+# Set JAVA HOME
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV PATH=$PATH:$JAVA_HOME/bin
+
+ENV PATH=$PATH:/opt/confluent/confluent-7.9.0/bin
+
+# Verify JAVA Installation
+RUN java --version
+
+#CMD ["nginx", "-g", "daemon off;"]
+
+CMD sh -c "nginx -g 'daemon on;' && sleep infinity"
+
+#RUN mkdir -p /opt/confluent
+#curl -O https://packages.confluent.io/archive/7.9/confluent-7.9.0.zip
